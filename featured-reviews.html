@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Products & Reviews - GH Marketplace</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Hero Slider (Text Only) -->
+    <div class="hero-slider relative bg-green-600 h-96 flex flex-col items-center justify-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 text-center">Find Fresh Produce & Product</h1>
+        <p class="text-lg md:text-2xl text-white mb-6 text-center">Awesome Product for authentic Ghanaian products</p>
+    </div>
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-8">
+                <a href="group 47.html" class="text-green-600 font-bold text-xl">GH Marketplace</a>
+                <a href="group 47.html" class="text-gray-600 hover:text-green-600">Home</a>
+            </div>
+            <a href="group 47.html" class="text-gray-600 hover:text-green-600">Back to Home</a>
+        </div>
+    </nav>
+    <main class="container mx-auto px-4 py-8">
+        <section id="products" class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Featured Products</h2>
+            <div class="mb-6 flex justify-end">
+                <div class="w-full flex flex-col items-center">
+                    <input id="productSearch" type="text" placeholder="Search products..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" />
+                    <div id="searchNotFound" class="text-sm text-red-500 mt-2 hidden">Item not found.</div>
+                </div>
+            </div>
+            <div id="featuredProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </section>
+        <section id="reviews" class="mb-12 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">What Our Users Say</h2>
+            <div id="userReviews" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </section>
+
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Your Cart</h3>
+                <button id="closeCartModal" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto"></div>
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-lg">Total:</span>
+                <span class="font-bold text-lg">GHS <span id="total">0</span></span>
+            </div>
+            <button id="checkoutBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 mb-2">Checkout</button>
+        </div>
+    </div>
+
+    </main>
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-2xl relative">
+            <button id="closeProductModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <div class="md:flex gap-6">
+                <div class="mb-6 md:mb-0 md:w-1/2 flex items-center justify-center">
+                    <img id="modalProductImage" src="" alt="Product" class="w-full h-64 object-cover rounded-lg">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 id="modalProductName" class="text-2xl font-bold text-gray-800 mb-2"></h3>
+                    <p id="modalProductDescription" class="text-gray-600 mb-4"></p>
+                    <div class="mb-4">
+                        <span class="font-bold text-lg">GHS <span id="modalProductPrice"></span></span>
+                    </div>
+                    <!-- Mobile Money Prompt -->
+                    <!-- Mobile Money Prompt (hidden by default, shown when Buy Now is clicked) -->
+                    <div class="mb-4 hidden" id="mobileMoneyPrompt">
+                        <label for="mobileMoneyNetwork" class="block font-semibold mb-1">Select Mobile Money Network</label>
+                        <select id="mobileMoneyNetwork" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="">-- Choose Network --</option>
+                            <option value="MTN">MTN Mobile Money</option>
+                            <option value="Telecel">Telecel Cash</option>
+                            <option value="AirtelTigo">AirtelTigo Cash</option>
+                        </select>
+                        <label for="mobileMoneyNumber" class="block font-semibold mb-1">Mobile Money Number</label>
+                        <input type="tel" id="mobileMoneyNumber" maxlength="10" placeholder="e.g. 024XXXXXXX" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+                        <label for="mobileMoneyPin" class="block font-semibold mb-1">Mobile Money PIN</label>
+
+And to add a cart icon to the navbar that shows the number of items in the cart and opens the cart modal when clicked, update your navbar section like this:
+
+Replace this part in your navbar:
+                        <input type="password" id="mobileMoneyPin" maxlength="6" placeholder="Enter your PIN" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+                        <div id="mobileMoneyError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid number, select a network, and enter your PIN.</div>
+                    </div>
+                    <div class="mb-4 font-bold" id="modalProductStock"></div>
+                    <div class="flex flex-col space-y-4">
+                        <button id="buyNowBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Buy Now</button>
+                        <button id="addToCartBtn" class="border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3 px-6 rounded-lg transition duration-300">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md relative">
+            <button id="closeReceiptModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-green-700 mb-4">Purchase Receipt</h2>
+                <img id="receiptProductImage" src="" alt="Product" class="w-24 h-24 object-cover rounded-lg mx-auto mb-4">
+                <div class="mb-2 font-bold text-lg" id="receiptProductName"></div>
+                <div class="mb-2 text-gray-700" id="receiptProductDescription"></div>
+                <div class="mb-2 font-bold">Price: GHS <span id="receiptProductPrice"></span></div>
+                <div class="mb-2 text-gray-600">Thank you for adding this product to your cart!</div>
+                <button id="closeReceiptBtn" class="mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">Close</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Example featured products and reviews (replace with dynamic fetch if needed)
+    const products = [
+        {name: "Fresh Pineapples", price: 15, image: "IMAGE/Fresh Pineapples.jpg", description: "Sweet and juicy pineapples harvested from Eastern Region farms.", stock: 8},
+        {name: "Handwoven Kente Cloth", price: 250, image: "IMAGE/Handwoven Kente Cloth.jpg", description: "Authentic Ghanaian kente cloth handwoven by master weavers.", stock: 3},
+        {name: "Organic Cocoa Butter", price: 30, image: "IMAGE/organic cocoa butter.jpg", description: "100% natural cocoa butter from Northern Ghana.", stock: 10},
+        {name: "Wooden Carving Set", price: 100, image: "IMAGE/wooden carving set.jpg", description: "Hand-carved wooden sculptures depicting traditional symbols.", stock: 2},
+        {name: "African Print Dress", price: 85, image: "IMAGE/cothing.jpg", description: "Beautifully tailored dress made with authentic African print fabric.", stock: 5},
+        {name: "Smartphone (Samsung Galaxy A32)", price: 1350, image: "IMAGE/samsung galaxy a32.jpg", description: "Brand new Samsung Galaxy A32 with 64GB storage.", stock: 4},
+        {name: "Home Blender (Binatone 1.5L)", price: 320, image: "IMAGE/blender.jpg", description: "Durable Binatone 1.5L blender for all your kitchen needs.", stock: 6},
+        {name: "Yam Tubers (10kg)", price: 60, image: "IMAGE/yam tubers.jpg", description: "Premium Ghanaian yam tubers, perfect for fufu and ampesi.", stock: 7},
+        {name: "Coconut Oil (1L)", price: 45, image: "IMAGE/coconut oil.jpg", description: "Cold-pressed coconut oil for cooking and skincare.", stock: 9},
+        {name: "Shea Butter (500g)", price: 25, image: "IMAGE/shea butter.jpg", description: "Raw, unrefined shea butter from Northern Ghana.", stock: 12},
+        {name: "Cashew Nuts (1kg)", price: 70, image: "IMAGE/cashew nut.jpg", description: "Crunchy, roasted cashew nuts, locally sourced.", stock: 0},
+        {name: "Dried Fish (500g)", price: 55, image: "IMAGE/dried fish.jpg", description: "Traditional dried fish, perfect for Ghanaian soups.", stock: 1},
+        {name: "Palm Oil (2L)", price: 35, image: "IMAGE/palm oil.jpg", description: "Rich, red palm oil for authentic Ghanaian dishes.", stock: 8},
+        {name: "Kenkey (Pack of 5)", price: 20, image: "IMAGE/kenkey.jpg", description: "Freshly made kenkey, ready to eat.", stock: 0},
+        {name: "Gari Mix", price: 18, image: "IMAGE/gari.jpg", description: "Authentic Gari mix, just add Water!", stock: 15}
+    ];
+    const reviews = [
+        {name: "Akua Mensah", location: "Accra", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=256&h=256&facepad=2", text: "GH Marketplace is the best platform for buying local goods! I found fresh produce at great prices and the delivery was fast."},
+        {name: "Kwame Boateng", location: "Kumasi", image: "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=facearea&w=256&h=256&facepad=2", text: "I recommend GH Marketplace to all my friends. The sellers are trustworthy and the payment process is very secure."},
+        {name: "Esi Owusu", location: "Takoradi", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=256&h=256&facepad=2", text: "As a seller, I’ve grown my business thanks to GH Marketplace. The platform is easy to use and I get more customers every week!"}
+    ];
+    // --- Product Modal Logic ---
+    let cart = [];
+    let currentProduct = null;
+    const featuredProductsDiv = document.getElementById('featuredProducts');
+    const productSearch = document.getElementById('productSearch');
+    const productModal = document.getElementById('productModal');
+    const closeProductModalBtn = document.getElementById('closeProductModal');
+    const modalProductImage = document.getElementById('modalProductImage');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalProductDescription = document.getElementById('modalProductDescription');
+    const modalProductPrice = document.getElementById('modalProductPrice');
+    const buyNowBtn = document.getElementById('buyNowBtn');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+
+    function showModal(modal) {
+        modal.classList.remove('hidden');
+    }
+    function hideModal(modal) {
+        modal.classList.add('hidden');
+    }
+
+    function viewProduct(product) {
+        currentProduct = product;
+        modalProductImage.src = product.image;
+        modalProductName.textContent = product.name;
+        modalProductDescription.textContent = product.description;
+        modalProductPrice.textContent = product.price.toFixed(2);
+        // Show stock and disable buttons if out of stock
+        let stockInfo = document.getElementById('modalProductStock');
+        if (!stockInfo) {
+            stockInfo = document.createElement('div');
+            stockInfo.id = 'modalProductStock';
+            stockInfo.className = 'mb-4 font-bold';
+            modalProductPrice.parentNode.appendChild(stockInfo);
+        }
+        if (product.stock === 0) {
+            stockInfo.innerHTML = `<span class='text-red-600'>Out of Stock</span>`;
+            addToCartBtn.disabled = true;
+            buyNowBtn.disabled = true;
+            addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            buyNowBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            stockInfo.innerHTML = `<span class='text-gray-700'>${product.stock} left</span>`;
+            addToCartBtn.disabled = false;
+            buyNowBtn.disabled = false;
+            addToCartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            buyNowBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        showModal(productModal);
+    }
+
+    function renderProducts(filter = "") {
+        featuredProductsDiv.innerHTML = "";
+        // Load stock from localStorage if available
+        let stockMap = {};
+        try {
+            stockMap = JSON.parse(localStorage.getItem('ghmarketplace_stock') || '{}');
+        } catch (e) { stockMap = {}; }
+        // Merge stock from localStorage into products
+        products.forEach(p => {
+            if (typeof stockMap[p.name] === 'number') p.stock = stockMap[p.name];
+        });
+        const filtered = products.filter(product =>
+            product.name.toLowerCase().includes(filter.toLowerCase()) ||
+            product.description.toLowerCase().includes(filter.toLowerCase())
+        );
+        const searchNotFound = document.getElementById('searchNotFound');
+        if (filtered.length === 0) {
+            featuredProductsDiv.innerHTML = '<div class="col-span-full text-center text-gray-500">No products found.</div>';
+            if (searchNotFound) searchNotFound.classList.remove('hidden');
+            return;
+        } else {
+            if (searchNotFound) searchNotFound.classList.add('hidden');
+        }
+        filtered.forEach(product => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg shadow-md overflow-hidden product-card transition duration-300 cursor-pointer';
+            let stockText = product.stock === 0 ? `<span class='text-red-600 font-bold ml-2'>Out of Stock</span>` : `<span class='text-gray-500 ml-2'>${product.stock} left</span>`;
+            div.innerHTML = `<img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover"><div class="p-4"><h3 class="font-bold text-xl mb-2">${product.name}</h3><p class="text-gray-600 mb-2 truncate">${product.description}</p><span class="font-bold text-lg">GHS ${product.price.toFixed(2)}</span> ${stockText}</div>`;
+            div.addEventListener('click', () => viewProduct(product));
+            featuredProductsDiv.appendChild(div);
+        });
+    }
+
+    // Initial render
+    renderProducts();
+
+    // Search event
+    productSearch.addEventListener('input', function() {
+        renderProducts(this.value);
+    });
+
+    // Modal close
+    closeProductModalBtn.addEventListener('click', () => hideModal(productModal));
+    // Add to Cart with Receipt Modal
+    const receiptModal = document.getElementById('receiptModal');
+    const closeReceiptModalBtn = document.getElementById('closeReceiptModal');
+    const closeReceiptBtn = document.getElementById('closeReceiptBtn');
+    const receiptProductImage = document.getElementById('receiptProductImage');
+    const receiptProductName = document.getElementById('receiptProductName');
+    const receiptProductDescription = document.getElementById('receiptProductDescription');
+    const receiptProductPrice = document.getElementById('receiptProductPrice');
+
+    addToCartBtn.addEventListener('click', function() {
+        // Check if user is logged in
+        let currentUser = null;
+        try {
+            currentUser = JSON.parse(localStorage.getItem('ghmarketplace_currentUser'));
+        } catch (e) {}
+        if (!currentUser || !currentUser.name) {
+            alert('You must be logged in to add items to your cart. Please login or register first.');
+            hideModal(productModal);
+            // Optionally, redirect or show login modal if available
+            window.location.href = 'group 47.html';
+            return;
+        }
+        if (!currentProduct || currentProduct.stock === 0) return;
+        // ...existing code for add to cart...
+        let storedCart = [];
+        try {
+            storedCart = JSON.parse(localStorage.getItem('ghmarketplace_cart')) || [];
+        } catch (e) { storedCart = []; }
+        const found = storedCart.find(item => item.name === currentProduct.name);
+        if (found) {
+            found.quantity += 1;
+        } else {
+            storedCart.push({...currentProduct, quantity: 1});
+        }
+        let stockMap = {};
+        try {
+            stockMap = JSON.parse(localStorage.getItem('ghmarketplace_stock') || '{}');
+        } catch (e) { stockMap = {}; }
+        let newStock = typeof stockMap[currentProduct.name] === 'number' ? stockMap[currentProduct.name] : currentProduct.stock;
+        if (newStock > 0) newStock--;
+        stockMap[currentProduct.name] = newStock;
+        currentProduct.stock = newStock;
+        localStorage.setItem('ghmarketplace_stock', JSON.stringify(stockMap));
+        localStorage.setItem('ghmarketplace_cart', JSON.stringify(storedCart));
+        cart = storedCart;
+        receiptProductImage.src = currentProduct.image;
+        receiptProductName.textContent = currentProduct.name;
+        receiptProductDescription.textContent = currentProduct.description;
+        receiptProductPrice.textContent = currentProduct.price.toFixed(2);
+        hideModal(productModal);
+        showModal(receiptModal);
+        renderProducts(productSearch.value);
+        setTimeout(() => {
+            if (currentProduct.stock === 0) {
+                let stockInfo = document.getElementById('modalProductStock');
+                if (stockInfo) stockInfo.innerHTML = `<span class='text-red-600'>Out of Stock</span>`;
+                addToCartBtn.disabled = true;
+                buyNowBtn.disabled = true;
+                addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                buyNowBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }, 100);
+    });
+
+    // Close receipt modal
+    function closeReceipt() {
+        hideModal(receiptModal);
+    }
+    closeReceiptModalBtn.addEventListener('click', closeReceipt);
+    closeReceiptBtn.addEventListener('click', closeReceipt);
+    // Buy Now
+    buyNowBtn.addEventListener('click', function() {
+        // Check if user is logged in
+        let currentUser = null;
+        try {
+            currentUser = JSON.parse(localStorage.getItem('ghmarketplace_currentUser'));
+        } catch (e) {}
+        if (!currentUser || !currentUser.name) {
+            alert('You must be logged in to buy a product. Please login or register first.');
+            hideModal(productModal);
+            window.location.href = 'group 47.html';
+            return;
+        }
+        if (!currentProduct) return;
+        alert(`Proceeding to buy: ${currentProduct.name} (GHS ${currentProduct.price.toFixed(2)})`);
+        hideModal(productModal);
+    });
+    // Render reviews
+    const userReviewsDiv = document.getElementById('userReviews');
+    reviews.forEach(review => {
+        const div = document.createElement('div');
+        div.className = 'bg-green-50 rounded-lg p-4 shadow flex flex-col items-center';
+        div.innerHTML = `<img src="${review.image}" alt="${review.name}" class="w-16 h-16 rounded-full mb-2 border-2 border-green-500"><p class="text-gray-700 italic mb-2">“${review.text}”</p><span class="font-bold text-green-700">${review.name}</span><span class="text-sm text-gray-500">${review.location}</span>`;
+        userReviewsDiv.appendChild(div);
+    });
+    </script>
+</body>
+</html>

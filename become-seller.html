@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Seller - GH Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .form-input:focus {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="group 47.html" class="flex items-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e764cb69-0fd2-4938-a65e-f5fda41c387b.png" alt="Logo" class="h-8 w-8 mr-2 rounded-full border-2 border-green-500">
+                <span class="font-semibold text-gray-500 text-lg">GH Marketplace</span>
+            </a>
+            <a href="group 47.html" class="text-green-600 hover:underline font-bold">Home</a>
+        </div>
+    </nav>
+    <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-3xl font-bold text-green-700 mb-6 text-center">Become a Seller</h2>
+        <form id="sellerRegisterForm" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 mb-1">Full Name</label>
+                <input type="text" id="sellerName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Email</label>
+                <input type="email" id="sellerEmail" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Phone Number</label>
+                <input type="text" id="sellerPhone" maxlength="10" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Password</label>
+                <input type="password" id="sellerPassword" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Confirm Password</label>
+                <input type="password" id="sellerConfirmPassword" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Shop Name</label>
+                <input type="text" id="shopName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Product Name</label>
+                <input type="text" id="productName" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Product Image</label>
+                <input type="file" id="productImage" accept="image/*" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Product Price (GHS)</label>
+                <input type="number" id="productPrice" min="0" step="0.01" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 mb-1">Stock Quantity</label>
+                <input type="number" id="productStock" min="1" class="form-input w-full px-3 py-2 border border-gray-300 rounded-md" required>
+            </div>
+            <div class="flex items-center mb-2">
+                <input type="checkbox" id="acceptSellerFee" class="form-checkbox h-5 w-5 text-green-600 mr-2" required>
+                <label for="acceptSellerFee" class="text-gray-700">I agree to pay the one-time seller registration fee of <span class="font-bold">GHS 50.00</span></label>
+            </div>
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">Register & Upload Product</button>
+        </form>
+        <div id="sellerSuccessMsg" class="hidden mt-6 p-4 bg-green-100 text-green-700 rounded-lg text-center font-bold"></div>
+    </div>
+    <script>
+        document.getElementById('sellerRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('sellerName').value.trim();
+            const email = document.getElementById('sellerEmail').value.trim();
+            const phone = document.getElementById('sellerPhone').value.trim();
+            const password = document.getElementById('sellerPassword').value;
+            const confirmPassword = document.getElementById('sellerConfirmPassword').value;
+            const shopName = document.getElementById('shopName').value.trim();
+            const productName = document.getElementById('productName').value.trim();
+            const productImageInput = document.getElementById('productImage');
+            const productPrice = parseFloat(document.getElementById('productPrice').value);
+            const productStock = parseInt(document.getElementById('productStock').value);
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+            if (phone.length !== 10) {
+                alert('Phone number must be exactly 10 digits.');
+                return;
+            }
+            if (!productImageInput.files[0]) {
+                alert('Please upload a product image.');
+                return;
+            }
+            const acceptFee = document.getElementById('acceptSellerFee');
+            if (!acceptFee.checked) {
+                alert('You must agree to pay the seller registration fee of GHS 50.00 to continue.');
+                return;
+            }
+            // Simulate payment process (internal MoMo number, not shown to user)
+            const momoReceiver = '0599621244'; // Internal use only
+            if (!window.sellerFeePaid) {
+                // Simulate payment to momoReceiver (hidden from user)
+                if (confirm('A one-time seller registration fee of GHS 50.00 is required. Click OK to simulate payment.')) {
+                    // In a real app, send payment to momoReceiver here
+                    window.sellerFeePaid = true;
+                    alert('Payment of GHS 50.00 successful! You can now complete your registration.');
+                } else {
+                    alert('Registration cancelled. Seller fee not paid.');
+                    return;
+                }
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const productImage = e.target.result;
+                const seller = {
+                    name, email, phone, password, shopName,
+                    products: [{
+                        name: productName,
+                        image: productImage,
+                        price: productPrice,
+                        stock: productStock
+                    }]
+                };
+                let sellers = JSON.parse(localStorage.getItem('ghmarketplace_sellers') || '[]');
+                sellers.push(seller);
+                localStorage.setItem('ghmarketplace_sellers', JSON.stringify(sellers));
+                document.getElementById('sellerSuccessMsg').textContent = 'Seller registered and product uploaded successfully! Redirecting to your dashboard...';
+                document.getElementById('sellerSuccessMsg').classList.remove('hidden');
+                setTimeout(function() {
+                    window.location.href = 'seller-dashboard.html';
+                }, 1200);
+                document.getElementById('sellerRegisterForm').reset();
+            };
+            reader.readAsDataURL(productImageInput.files[0]);
+        });
+    </script>
+</body>
+</html>

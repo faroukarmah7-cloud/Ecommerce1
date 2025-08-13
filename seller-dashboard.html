@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - GH Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .star {
+            color: #fbbf24;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-lg mb-8">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="group 47.html" class="flex items-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e764cb69-0fd2-4938-a65e-f5fda41c387b.png" alt="Logo" class="h-8 w-8 mr-2 rounded-full border-2 border-green-500">
+                <span class="font-semibold text-gray-500 text-lg">GH Marketplace</span>
+            </a>
+            <a href="become-seller.html" class="text-green-600 hover:underline font-bold">Add Product</a>
+        </div>
+    </nav>
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+        <h2 class="text-3xl font-bold text-green-700 mb-6 text-center">Seller Dashboard</h2>
+        <div id="sellerInfo" class="mb-8"></div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Your Products</h3>
+        <div id="productList" class="mb-8"></div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Items Bought</h3>
+        <div id="itemsBought" class="mb-8"></div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Customer Reviews</h3>
+        <div id="reviewsList"></div>
+    </div>
+    <script>
+        // Get seller from localStorage (simulate login)
+        let sellers = JSON.parse(localStorage.getItem('ghmarketplace_sellers') || '[]');
+        let seller = sellers[sellers.length-1]; // Last registered seller
+        if (!seller) {
+            document.body.innerHTML = '<div class="text-center mt-20 text-red-600 font-bold text-2xl">No seller found. Please register first.</div>';
+        } else {
+            // Seller Info
+            document.getElementById('sellerInfo').innerHTML = `
+                <div class="mb-2"><span class="font-bold">Name:</span> ${seller.name}</div>
+                <div class="mb-2"><span class="font-bold">Email:</span> ${seller.email}</div>
+                <div class="mb-2"><span class="font-bold">Phone:</span> ${seller.phone}</div>
+                <div class="mb-2"><span class="font-bold">Shop Name:</span> ${seller.shopName}</div>
+            `;
+            // Products
+            let productsHtml = '';
+            seller.products.forEach((p, idx) => {
+                productsHtml += `
+                    <div class="flex items-center mb-4 bg-green-50 rounded-lg p-4">
+                        <img src="${p.image}" alt="${p.name}" class="w-20 h-20 object-cover rounded-lg mr-4">
+                        <div>
+                            <div class="font-bold text-lg">${p.name}</div>
+                            <div>Price: GHS ${p.price.toFixed(2)}</div>
+                            <div>Stock: ${p.stock}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('productList').innerHTML = productsHtml || '<div class="text-gray-500">No products uploaded yet.</div>';
+            // Items Bought (simulate with empty for now)
+            let bought = JSON.parse(localStorage.getItem('ghmarketplace_bought') || '[]');
+            let myBought = bought.filter(b => b.sellerEmail === seller.email);
+            let boughtHtml = '';
+            myBought.forEach(b => {
+                boughtHtml += `<div class="mb-2">${b.productName} - <span class="text-green-700">${b.buyerName}</span></div>`;
+            });
+            document.getElementById('itemsBought').innerHTML = boughtHtml || '<div class="text-gray-500">No items bought yet.</div>';
+            // Reviews (only from buyers who bought this seller's products)
+            let reviews = JSON.parse(localStorage.getItem('ghmarketplace_reviews') || '[]');
+            let myReviews = reviews.filter(r => r.sellerEmail === seller.email);
+            let reviewsHtml = '';
+            myReviews.forEach(r => {
+                reviewsHtml += `<div class="mb-4 p-4 bg-yellow-50 rounded-lg">
+                    <div class="flex items-center mb-1">
+                        <span class="font-bold mr-2">${r.buyerName}</span>
+                        <span>${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</span>
+                    </div>
+                    <div class="text-gray-700">${r.text}</div>
+                </div>`;
+            });
+            document.getElementById('reviewsList').innerHTML = reviewsHtml || '<div class="text-gray-500">No reviews yet.</div>';
+        }
+    </script>
+</body>
+</html>
